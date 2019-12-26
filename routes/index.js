@@ -100,9 +100,12 @@ router
     .route('/hook')
     .get((req,res)=>{
     console.log(req.body)
+        res.end()
 })
     .post((req,res)=>{
-        console.log(req.body)
+        let leadId = req.body.leads.status[0]
+        console.log(leadId)
+        res.end()
     });
 
 
