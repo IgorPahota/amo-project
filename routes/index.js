@@ -5,6 +5,8 @@ const User = require("../models/users");
 const fetch = require('node-fetch');
 const saltRounds = 10;
 const router = express.Router();
+const Lead = require("../models/leads");
+
 
 
 router.get("/", sessionChecker, (req, res) => {
@@ -102,8 +104,29 @@ router
     console.log(req.body)
         res.end()
 })
-    .post((req,res)=>{
-        let leadId = req.body.leads.status[0]
+    .post(async(req,res)=>{
+        let leadId = req.body.leads.status[0].id
+
+        let requestOptionsFirstAuth = {
+            method: 'POST',
+            redirect: 'follow',
+        };
+        let cookie;
+        let responseWithCookie = await fetch("https://prjctamoelbrus.amocrm.ru/private/api/auth.php?USER_LOGIN=prjctamoelbrus@yandex.com&USER_HASH=5e3c06165392209beb6dcdeb1216cf89ddac0844&type=json", requestOptionsFirstAuth)
+            .then(response => {
+                cookie = response.headers.raw()['set-cookie'];
+            });
+        let requestOptionsAuthorized = {
+            method: 'GET',
+            redirect: 'follow',
+            headers: {
+                'Cookie': cookie[0]
+            }
+        };
+        let responseWithData = await fetch(`https://prjctamoelbrus.amocrm.ru/api/v2/leads?id=${leadId}`, requestOptionsAuthorized);
+        let dataFromAmo = await responseWithData.json();
+        console.log(dataFromAmo._embedded);
+
         console.log(leadId)
         res.end()
     });
