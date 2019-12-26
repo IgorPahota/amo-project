@@ -126,6 +126,7 @@ router
         let responseWithData = await fetch(`https://prjctamoelbrus.amocrm.ru/api/v2/leads?id=${leadId}`, requestOptionsAuthorized);
         let dataFromAmo = await responseWithData.json();
         let readyToSave = dataFromAmo._embedded.items[0]
+        console.log(readyToSave.id);
         const lead = new Lead ({
             id: readyToSave.id,
             name: readyToSave.name,
