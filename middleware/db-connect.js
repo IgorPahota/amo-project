@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-mongoose.connect("mongodb://localhost:27017/amoProject", {
+mongoose.connect("mongodb+srv://amoUser:amoUser@cluster0-1qzj7.mongodb.net/test?retryWrites=true&w=majority", {
   useNewUrlParser: true,
   useCreateIndex: true
 });
