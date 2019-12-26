@@ -125,8 +125,38 @@ router
         };
         let responseWithData = await fetch(`https://prjctamoelbrus.amocrm.ru/api/v2/leads?id=${leadId}`, requestOptionsAuthorized);
         let dataFromAmo = await responseWithData.json();
-        console.log(dataFromAmo._embedded);
+        let readyToSave = dataFromAmo._embedded.items[0]
+        const lead = new Lead ({
+            id: readyToSave.id,
+            name: readyToSave.name,
+            responsible_user_id: readyToSave.responsible_user_id,
+            created_by: readyToSave.created_by,
+            created_at: readyToSave.created_at,
+            updated_at: readyToSave.updated_at,
+            account_id: readyToSave.account_id,
+            pipeline_id: readyToSave.pipeline_id,
+            status_id: readyToSave.status_id,
+            updated_by: readyToSave.updated_by,
+            is_deleted: readyToSave.is_deleted,
+            main_contact: readyToSave.main_contact,
+            group_id: readyToSave.group_id,
+            company: readyToSave.company,
+            closed_at: readyToSave.closed_at,
+            closest_task_at: readyToSave.closest_task_at,
+            tags: readyToSave.tags,
+            custom_fields:readyToSave.custom_fields,
+            contacts: readyToSave.contacts,
+            sale: readyToSave.sale,
+            loss_reason_id: readyToSave.loss_reason_id,
+            pipeline: readyToSave.pipeline,
+            _links: readyToSave._links
+        });
+        await lead.save();
 
+
+
+
+        console.log(dataFromAmo._embedded);
         console.log(leadId)
         res.end()
     });

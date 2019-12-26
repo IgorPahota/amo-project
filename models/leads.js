@@ -12,18 +12,18 @@ const leadSchema = new mongoose.Schema({
     status_id: Number,
     updated_by: Number,
     is_deleted: Boolean,
-    main_contact: [],
+    main_contact: Object,
     group_id: Number,
     company: Object,
     closed_at: Number,
     closest_task_at: Number,
-    tags: [],
-    custom_fields:{},
-    contacts: [],
+    tags: Object,
+    custom_fields:Object,
+    contacts: Object,
     sale: Number,
     loss_reason_id: Number,
-    pipeline: [],
-    _links: []
+    pipeline: Object,
+    _links: Object
 
 });
 
