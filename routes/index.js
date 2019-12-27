@@ -210,7 +210,6 @@ router
 
 
        res.render('allleadscs',{
-            layout: false,
             data: data
         })
 
