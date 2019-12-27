@@ -64,15 +64,67 @@ router.get("/logout", async (req, res, next) => {
     }
 });
 
+
+
+
+
 router
     .route('/dashboard')
     .post(async (req, res) => {
+        try {
+            let {subdomain, amoEmail, key} = req.body;
+            req.session.user.subdomain = subdomain;
+            req.session.user.amoEmail = amoEmail;
+            req.session.user.key = key
+            // console.log(req.session.user)
+            let requestOptionsFirstAuth = {
+                method: 'POST',
+                redirect: 'follow',
+            };
+            let cookie;
+            let responseWithCookie = await fetch(`https://${subdomain}.amocrm.ru/private/api/auth.php?USER_LOGIN=${amoEmail}&USER_HASH=${key}&type=json`, requestOptionsFirstAuth)
+                .then(response => {
+                    cookie = response.headers.raw()['set-cookie'];
+                });
+
+            let response = true;
+            res.json({
+                response: response,
+
+            });
+            res.render()
+        } catch (error) {
+            let response = false;
+            res.json({
+                response: response
+            })
+        }
+    })
+    .get((req,res)=>{
+        if (req.session.user) {
+            let userData = req.session.user;
+            res.render('dashboard', {
+                userData
+            })
+        } else res.redirect('/login')
+    });
+
+
+router
+    .route('/dashboard/authorized')
+.get(async (req,res)=>{
+    if (req.session.user) {
+        let userData = req.session.user;
+        let subdomain = req.session.user.subdomain;
+        let amoEmail = req.session.user.amoEmail;
+        let key = req.session.user.key;
+
         let requestOptionsFirstAuth = {
             method: 'POST',
             redirect: 'follow',
         };
         let cookie;
-        let responseWithCookie = await fetch("https://prjctamoelbrus.amocrm.ru/private/api/auth.php?USER_LOGIN=prjctamoelbrus@yandex.com&USER_HASH=5e3c06165392209beb6dcdeb1216cf89ddac0844&type=json", requestOptionsFirstAuth)
+        let responseWithCookie = await fetch(`https://${subdomain}.amocrm.ru/private/api/auth.php?USER_LOGIN=${amoEmail}&USER_HASH=${key}&type=json`, requestOptionsFirstAuth)
             .then(response => {
                 cookie = response.headers.raw()['set-cookie'];
             });
@@ -86,22 +138,92 @@ router
         let responseWithData = await fetch("https://prjctamoelbrus.amocrm.ru/api/v2/leads", requestOptionsAuthorized);
         let dataFromAmo = await responseWithData.json();
         console.log(dataFromAmo._embedded);
+        let correctData = dataFromAmo._embedded.items
 
-        res.end()
-    })
+
+
+
+
+
+
+        res.render('allleads', {
+            correctData,
+            userData
+        })
+    } else res.redirect('/login')
+})
+
+
+router
+    .route('/leadscs')
     .get((req,res)=>{
         if (req.session.user) {
-            let userData = req.session.user;
-            res.render('dashboard', {
+            let userData = req.session.user
+            res.render('leadscs', {
                 userData
             })
         } else res.redirect('/login')
+    })
+    .post(async(req,res)=>{
+       let pipelineId = req.body.pipelineId;
+        let data = await Lead.find({pipeline_id:pipelineId});
+
+        // let contactsIdArray = data.map((elem)=>{
+        //     let newElem=elem.main_contact.id;
+        //     elem=newElem;
+        //     return elem
+        // })
+        // let newArr = contactsIdArray
+        //
+        //
+        //
+        // console.log(contactsIdArray.split(','));
+
+
+        // let subdomain = req.session.user.subdomain;
+        // let amoEmail = req.session.user.amoEmail;
+        // let key = req.session.user.key;
+        //
+        // let requestOptionsFirstAuth = {
+        //     method: 'POST',
+        //     redirect: 'follow',
+        // };
+        // let cookie;
+        // let responseWithCookie = await fetch(`https://${subdomain}.amocrm.ru/private/api/auth.php?USER_LOGIN=${amoEmail}&USER_HASH=${key}&type=json`, requestOptionsFirstAuth)
+        //     .then(response => {
+        //         cookie = response.headers.raw()['set-cookie'];
+        //     });
+        // let requestOptionsAuthorized = {
+        //     method: 'GET',
+        //     redirect: 'follow',
+        //     headers: {
+        //         'Cookie': cookie[0]
+        //     }
+        // };
+        // let responseWithData = await fetch("https://prjctamoelbrus.amocrm.ru/api/v2/leads", requestOptionsAuthorized);
+        // let dataFromAmo = await responseWithData.json();
+        // console.log(dataFromAmo);
+        // let correctData = dataFromAmo._embedded.items
+
+
+
+
+
+       res.render('allleadscs',{
+            layout: false,
+            data: data
+        })
+
+
+
     });
+
+
 
 router
     .route('/hook')
     .get((req,res)=>{
-    console.log(req.body)
+    console.log(req.body);
         res.end()
 })
     .post(async(req,res)=>{
@@ -125,7 +247,7 @@ router
         };
         let responseWithData = await fetch(`https://prjctamoelbrus.amocrm.ru/api/v2/leads?id=${leadId}`, requestOptionsAuthorized);
         let dataFromAmo = await responseWithData.json();
-        let readyToSave = dataFromAmo._embedded.items[0]
+        let readyToSave = dataFromAmo._embedded.items[0];
         console.log(readyToSave.id);
         const lead = new Lead ({
             id: readyToSave.id,

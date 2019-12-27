@@ -20,20 +20,15 @@
 </nav>
 
 <div class="container row">
-    <h4>Put the data below for amoCRM account connection</h4>
+    <h4>Put the pipeline id or status id below for checking the leads, which changed the lead stage</h4>
     <div>
-        <form name="connection" id="first"  method="POST">
-            <input type="text" name="subdomain" value="your amoCRM subdomain">
-            <input type="text" name="amoEmail" value="your amoCRM email">
-            <input type="text" name="key" value="your API key">
+        <form name="pipeline" id="second"  method="POST">
+            <input type="text" name="pipelineId" value="pipeline ID">
             <input type="submit" value="value">
         </form>
-<!--        <form name="leads" id="2" action="/dashboard" method="POST">-->
-<!--            <input type="text" name="leadID" value="leadID">-->
-<!--            <input type="submit" >-->
-<!--        </form>-->
-<!--        <form name="authorize" id="3" action="/dashboard" method="POST">-->
-<!--            <input type="submit" >-->
-<!--        </form>-->
     </div>
+<!--    <h4>If you dont know the ID's of your pipelines and statuses,please press the button below</h4>-->
+<!--    <form name="pipeline" id="first"  method="POST">-->
+<!--        <input type="submit" value="value">-->
+<!--    </form>-->
 </div>
