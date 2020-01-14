@@ -13,6 +13,11 @@ router.get("/", sessionChecker, (req, res) => {
     res.redirect("/login");
 });
 
+router.get('/mail', (req, res)=>{
+    console.log(req.body);
+    res.end()
+})
+
 router
     .route("/login")
     .get(sessionChecker, (req, res) => {
