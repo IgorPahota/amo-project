@@ -13,10 +13,7 @@ router.get("/", sessionChecker, (req, res) => {
     res.redirect("/login");
 });
 
-router.get('/mail', (req, res)=>{
-    console.log(req.body);
-    res.end()
-})
+
 
 router
     .route("/login")
@@ -231,7 +228,7 @@ router
         res.end()
 })
     .post(async(req,res)=>{
-        let leadId = req.body.leads.status[0].id
+        let leadId = req.body.leads.status[0].id;
 
         let requestOptionsFirstAuth = {
             method: 'POST',
@@ -288,5 +285,97 @@ router
         res.end()
     });
 
+
+
+
+
+
+
+
+
+router.get('/mail/:id', async (req, res)=>{
+    //first auth
+    // console.log(req.params.id)
+    let requestOptionsFirstAuth = {
+        method: 'POST',
+        redirect: 'follow',
+    };
+    let cookie = [];
+    let login = 'prjctamoelbrus@yandex.com';
+    let hash = '935841b1d8108cd949645a6c754cd06840ed40eb';
+    let responseWithCookie = await fetch(`https://secondelbrus.amocrm.ru/private/api/auth.php?USER_LOGIN=${login}&USER_HASH=${hash}type=json`, requestOptionsFirstAuth)
+        .then(response => {
+            cookie = response.headers.raw()['set-cookie'];
+            // console.log(cookie);
+            console.log(response)
+        });
+    //request authorized
+    // console.log(typeof cookie[0])
+    // let raw = await JSON.stringify({"add":[{"element_id":"2820677","element_type":"2","complete_till":"1579440120","task_type":"1","text":"PEREZVONITE"}]});
+    // // console.log(raw);
+    // let requestOptionsAuthorized = {
+    //     method: 'POST',
+    //     redirect: 'follow',
+    //     headers: {
+    //         "Content-Type": "application/json",
+    //         "Cookie": cookie[0],
+    //     },
+    //     body: raw
+    // }
+    // let responseWithData = await fetch(`https://secondelbrus.amocrm.ru/api/v2/tasks`, requestOptionsAuthorized);
+    // let dataFromAmo = await responseWithData.json();
+    // console.log(dataFromAmo);
+
+
+
+    //new post request
+
+    // var myHeaders = new Headers();
+    // myHeaders.append("Content-Type", "application/json");
+    // myHeaders.append("User-Agent", "PostmanRuntime/7.22.0");
+    // myHeaders.append("Accept", "*/*");
+    // myHeaders.append("Cache-Control", "no-cache");
+    // // myHeaders.append("Postman-Token", "7e16f68c-7118-4549-8b0c-e84d87ae17d3");
+    // myHeaders.append("Host", "secondelbrus.amocrm.ru");
+    // myHeaders.append("Accept-Encoding", "gzip, deflate, br");
+    // myHeaders.append("Content-Length", "233");
+    // myHeaders.append("Cookie", `${cookie[0]}`);
+    // myHeaders.append("Connection", "keep-alive");
+
+    // let raw = JSON.stringify({"add":[{"element_id":"2820677","element_type":"2","complete_till":"1579440120","task_type":"1","text":"from back"}]});
+    //
+    // let requestOptions = {
+    //     method: 'POST',
+    //     headers: {
+    //         "Content-Type":"application/json",
+    //         "Host": "secondelbrus.amocrm.ru",
+    //         "Accept-Encoding":"gzip, deflate, br",
+    //         "Cookie": cookie[0],
+    //         "Connection":"keep-alive"
+    //
+    //     },
+    //     body: raw,
+    //     redirect: 'follow'
+    // };
+    //
+    // fetch("https://secondelbrus.amocrm.ru/api/v2/tasks", requestOptions)
+    //     .then(response => response.text())
+    //     .then(result => console.log(result))
+    //     .catch(error => console.log('error', error));
+
+    // let requestOptionsAuthorized = {
+    //     method: 'GET',
+    //     headers: {
+    //         'Cookie': cookie[0]
+    //     }
+    // };
+    // let responseWithData = await fetch(`https://secondelbrus.amocrm.ru/api/v2/leads?id=2820677`, requestOptionsAuthorized);
+    // let dataFromAmo = await responseWithData.json();
+    // console.log(dataFromAmo);
+
+
+    res.end()
+
+})
 
 module.exports = router;
