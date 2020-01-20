@@ -319,7 +319,7 @@ router.get('/mail/:id', async (req, res)=>{
     await fetch(`https://secondelbrus.amocrm.ru/private/api/auth.php?USER_LOGIN=${login}&USER_HASH=${hash}&type=json`, requestOptions)
         .then(response => {
             cookie = response.headers.raw()['set-cookie']
-        });
+        }).catch(error => console.log(error));
 
 
     //postman data fetch
