@@ -301,7 +301,7 @@ router.get('/mail/:id', async (req, res)=>{
     // let hash = process.env.key;
     // let login = process.env.login;
     let id = req.params.id;
-    console.log(hash);
+    // console.log(hash);
     let myHeaders = new Headers();
     myHeaders.append("Accept", "*/*");
     myHeaders.append("Cache-Control", "no-cache");
