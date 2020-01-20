@@ -298,14 +298,13 @@ global.Headers = fetch.Headers;
 
 
 router.get('/mail/:id', async (req, res)=>{
-
+    let hash = process.env.key;
+    let login = process.env.login;
     let id = req.params.id;
-    //postman authorization
-
     let myHeaders = new Headers();
     myHeaders.append("Accept", "*/*");
     myHeaders.append("Cache-Control", "no-cache");
-    myHeaders.append("Host", "secondelbrus.amocrm.ru");
+    myHeaders.append("Host", `${login}`);
     myHeaders.append("Accept-Encoding", "gzip, deflate, br");
     myHeaders.append("Content-Length", "");
     myHeaders.append("Connection", "keep-alive");
@@ -315,24 +314,25 @@ router.get('/mail/:id', async (req, res)=>{
         headers: myHeaders,
         redirect: 'follow'
     };
-    let cookie
-    await fetch("https://secondelbrus.amocrm.ru/private/api/auth.php?USER_LOGIN=prjctamoelbrus@yandex.com&USER_HASH=935841b1d8108cd949645a6c754cd06840ed40eb&type=json", requestOptions)
+    let cookie;
+
+    await fetch(`https://secondelbrus.amocrm.ru/private/api/auth.php?USER_LOGIN=${login}&USER_HASH=${hash}&type=json`, requestOptions)
         .then(response => {
             cookie = response.headers.raw()['set-cookie']
         });
 
 
     //postman data fetch
-    let cookieForPost = cookie[0].split(';')
-    let date = Date.now()
-    let dateString = date.toString()
-    let dateForPost = dateString.slice(0,10)
+    let cookieForPost = cookie[0].split(';');
+    let date = Date.now();
+    let dateString = date.toString();
+    let dateForPost = dateString.slice(0,10);
     console.log(dateForPost);
     let myHeaders2 = new Headers();
     myHeaders2.append("Content-Type", "application/json");
     myHeaders2.append("Accept", "*/*");
     myHeaders2.append("Cache-Control", "no-cache");
-    myHeaders2.append("Host", "secondelbrus.amocrm.ru");
+    myHeaders2.append("Host", `${login}`);
     myHeaders2.append("Accept-Encoding", "gzip, deflate, br");
     myHeaders2.append("Cookie", `user_lang=ru; ${cookieForPost[0]}`);
     myHeaders2.append("Connection", "keep-alive");
