@@ -317,7 +317,7 @@ router.get('/mail/:id', async (req, res)=>{
     };
     let cookie;
 
-    await fetch(`https://secondelbrus.amocrm.ru/private/api/auth.php?USER_LOGIN=${login}&USER_HASH=${hash}&type=json`, requestOptions)
+    await fetch(`https://thirdelbrus.amocrm.ru/private/api/auth.php?USER_LOGIN=${login}&USER_HASH=${hash}&type=json`, requestOptions)
         .then(response => {
             cookie = response.headers.raw()['set-cookie']
         }).catch(error => console.log(error));
@@ -347,7 +347,7 @@ router.get('/mail/:id', async (req, res)=>{
         redirect: 'follow'
     };
 
-    await fetch("https://secondelbrus.amocrm.ru/api/v2/tasks", requestOptions2)
+    await fetch("https://thirdelbrus.amocrm.ru/api/v2/tasks", requestOptions2)
         .then(response => console.log(response.status));
 
 
