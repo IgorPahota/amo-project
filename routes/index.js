@@ -11,13 +11,10 @@ global.fetch = fetch
 global.Headers = fetch.Headers;
 
 
-
-
+//future feature
 // router.get("/", sessionChecker, (req, res) => {
 //     res.redirect("/login");
 // });
-
-
 
 // router
 //     .route("/login")
@@ -69,9 +66,6 @@ global.Headers = fetch.Headers;
 //         res.redirect("/login");
 //     }
 // });
-
-
-
 
 
 // router
@@ -210,11 +204,6 @@ global.Headers = fetch.Headers;
         // let dataFromAmo = await responseWithData.json();
         // console.log(dataFromAmo);
         // let correctData = dataFromAmo._embedded.items
-
-
-
-
-
     //    res.render('allleadscs',{
     //         data: data
     //     })
@@ -222,8 +211,6 @@ global.Headers = fetch.Headers;
     //
     //
     // });
-
-
 
 // router
 //     .route('/hook')
@@ -288,13 +275,6 @@ global.Headers = fetch.Headers;
 //         console.log(leadId)
 //         res.end()
 //     });
-
-
-
-
-
-
-
 
 
 router.get('/mail/:id', async (req, res)=>{
