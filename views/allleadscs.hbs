@@ -1,0 +1,33 @@
+<div class="page-header">
+    <h1>Elbrus amoCRM project</h1>
+</div>
+
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li><a href="/dashboard">amoCRM connection</a></li>
+                <li><a href="/leadscs">Changed stage leads</a></li>
+            </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+                <li><a >{{userData.username}}</a></li>
+                <li><a href="/logout">Log Out</a></li>
+            </ul>
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>
+<div class="container row">
+<div>
+        {{#each data}}
+            <ul>
+                <li>Lead ID - {{this.id}}</li>
+                <li>Lead name - {{this.name}}</li>
+                <li>Lead sale value - {{this.sale}}</li>
+                <li>Lead company name - {{this.company.name}}</li>
+
+            </ul>
+        {{/each}}
+</div>
+</div>

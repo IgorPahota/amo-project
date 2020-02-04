@@ -1,0 +1,34 @@
+<div class="page-header">
+    <h1>Elbrus amoCRM project</h1>
+</div>
+
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li><a href="/dashboard">amoCRM connection</a></li>
+                <li><a href="/leadscs">Changed stage leads</a></li>
+            </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+                <li><a >{{userData.username}}</a></li>
+                <li><a href="/logout">Log Out</a></li>
+            </ul>
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>
+
+<div class="container row">
+    <h4>Put the pipeline id or status id below for checking the leads, which changed the lead stage</h4>
+    <div>
+        <form name="pipeline" id="second"  method="POST">
+            <input type="text" name="pipelineId" value="pipeline ID">
+            <input type="submit" value="value">
+        </form>
+    </div>
+<!--    <h4>If you dont know the ID's of your pipelines and statuses,please press the button below</h4>-->
+<!--    <form name="pipeline" id="first"  method="POST">-->
+<!--        <input type="submit" value="value">-->
+<!--    </form>-->
+</div>

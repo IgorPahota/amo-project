@@ -1,0 +1,42 @@
+label {
+  display: block;
+}
+
+.container{
+  margin-right: 0px;
+  margin-top: 0px;
+  margin-left: 0px;
+}
+
+
+
+.text-container {
+  margin-top: 20%;
+  font-size: 20px;
+}
+
+
+.img-div {
+  margin-left: 100px;
+  width: 100px;
+  height: 100px;
+}
+
+.header-div {
+  width: 100%;
+  height: 100px;
+  background-color: #4733ab;
+
+}
+
+h1 {
+  color: #4733ab;
+  font-family: RF Rostin,Arial,sans-serif;
+  min-height: 100vh
+}
+
+.middle-div {
+  display: flex;
+  justify-content: center;
+
+}
